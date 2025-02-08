@@ -4,51 +4,40 @@
 
 import 'dart:convert';
 
-CartModel cartModelFromJson(String str) => CartModel.fromJson(json.decode(str));
+List<CartModel> cartModelFromJson(String? str) =>
+    List<CartModel>.from(json.decode(str!).map((x) => CartModel.fromJson(x)));
 
-String cartModelToJson(CartModel data) => json.encode(data.toJson());
+String cartModelToJson(List<CartModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CartModel {
-  final bool? status;
-  final String? message;
+  String name;
+  String id;
+  String price;
+  String image;
+  int quantity;
 
   CartModel({
-    this.status,
-    this.message,
+    required this.name,
+    required this.id,
+    required this.price,
+    required this.image,
+    required this.quantity,
   });
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
-    status: json["status"],
-    message: json["message"],
-  );
+        name: json["name"],
+        id: json["id"],
+        price: json["price"],
+        image: json["image"],
+        quantity: json["quantity"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-  };
-}
-
-
-ItemModel itemModelFromJson(String str) => ItemModel.fromJson(json.decode(str));
-
-String itemModelToJson(ItemModel data) => json.encode(data.toJson());
-
-class ItemModel {
-  final bool? status;
-  final String? message;
-
-  ItemModel({
-    this.status,
-    this.message,
-  });
-
-  factory ItemModel.fromJson(Map<String, dynamic> json) => ItemModel(
-    status: json["status"],
-    message: json["message"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "status": status,
-    "message": message,
-  };
+        "name": name,
+        "id": id,
+        "price": price,
+        "image": image,
+        "quantity": quantity,
+      };
 }

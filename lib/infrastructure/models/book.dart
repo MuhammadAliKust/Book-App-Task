@@ -4,11 +4,9 @@
 
 import 'dart:convert';
 
-BookListingModel bookListingModelFromJson(String str) =>
-    BookListingModel.fromJson(json.decode(str));
+BookListingModel bookListingModelFromJson(String str) => BookListingModel.fromJson(json.decode(str));
 
-String bookListingModelToJson(BookListingModel data) =>
-    json.encode(data.toJson());
+String bookListingModelToJson(BookListingModel data) => json.encode(data.toJson());
 
 class BookListingModel {
   final bool? status;
@@ -21,59 +19,61 @@ class BookListingModel {
     this.data,
   });
 
-  factory BookListingModel.fromJson(Map<String, dynamic> json) =>
-      BookListingModel(
-        status: json["status"],
-        message: json["message"],
-        data: json["data"] == null
-            ? []
-            : List<BookModel>.from(
-                json["data"]!.map((x) => BookModel.fromJson(x))),
-      );
+  factory BookListingModel.fromJson(Map<String, dynamic> json) => BookListingModel(
+    status: json["status"],
+    message: json["message"],
+    data: json["data"] == null ? [] : List<BookModel>.from(json["data"]!.map((x) => BookModel.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "message": message,
-        "data": data == null
-            ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
-      };
+    "status": status,
+    "message": message,
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+  };
 }
 
 class BookModel {
-  final int? id;
   final Author? author;
+  final String? id;
   final String? title;
   final String? coverImage;
+  final String? content;
+  final String? price;
   final int? pages;
   final String? releaseDate;
 
   BookModel({
-    this.id,
     this.author,
+    this.id,
     this.title,
     this.coverImage,
+    this.content,
+    this.price,
     this.pages,
     this.releaseDate,
   });
 
   factory BookModel.fromJson(Map<String, dynamic> json) => BookModel(
-        id: json["id"],
-        author: json["author"] == null ? null : Author.fromJson(json["author"]),
-        title: json["title"],
-        coverImage: json["cover_image"],
-        pages: json["pages"],
-        releaseDate: json["releaseDate"],
-      );
+    author: json["author"] == null ? null : Author.fromJson(json["author"]),
+    id: json["_id"],
+    title: json["title"],
+    coverImage: json["cover_image"],
+    pages: json["pages"],
+    releaseDate: json["releaseDate"],
+    content: json["content"],
+    price: json["price"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "author": author?.toJson(),
-        "title": title,
-        "cover_image": coverImage,
-        "pages": pages,
-        "releaseDate": releaseDate,
-      };
+    "author": author?.toJson(),
+    "_id": id,
+    "title": title,
+    "cover_image": coverImage,
+    "pages": pages,
+    "releaseDate": releaseDate,
+    "content": content,
+    "price": price,
+  };
 }
 
 class Author {
@@ -86,12 +86,12 @@ class Author {
   });
 
   factory Author.fromJson(Map<String, dynamic> json) => Author(
-        id: json["id"],
-        name: json["name"],
-      );
+    id: json["id"],
+    name: json["name"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-      };
+    "id": id,
+    "name": name,
+  };
 }

@@ -23,7 +23,7 @@ class BookRepositoryImp extends BookRepository {
   Future<Either<GlobalErrorModel, BookListingModel>> getAllBooks() async {
     var data = await ApiBaseHelper().getEither(
       endPoint: BackendConfigs.kGetBooks,
-      isRequiredHeader: true,
+      isRequiredHeader: false,
     );
     return data.fold(
         (l) => Left(GlobalErrorModel(message: l.message.toString())),
@@ -35,7 +35,8 @@ class BookRepositoryImp extends BookRepository {
   Future<Either<GlobalErrorModel, BookListingModel>> searchBook(
       String searchKey) async {
     var data = await ApiBaseHelper().getEither(
-        endPoint: BackendConfigs.kSearchBooks, isRequiredHeader: false);
+        endPoint: "${BackendConfigs.kSearchBooks}?title=$searchKey",
+        isRequiredHeader: false);
     return data.fold(
         (l) => Left(GlobalErrorModel(message: l.message.toString())),
         (r) => Right(BookListingModel.fromJson(r)));

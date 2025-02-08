@@ -1,7 +1,26 @@
+import 'package:book_app/application/cart_bloc/cart_bloc.dart';
+import 'package:book_app/presentation/views/auth/forgot_pwd.dart';
+import 'package:book_app/presentation/views/auth/login.dart';
+import 'package:book_app/presentation/views/auth/sign_up.dart';
+import 'package:book_app/presentation/views/books/get_books.dart';
+import 'package:book_app/presentation/views/cart/cart.dart';
+import 'package:book_app/presentation/views/intro/splash.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'injection_container.dart' as di;
+import 'injection_container.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await di.init();
+  runApp(BlocProvider(
+    create: (context) => sl<CartBloc>(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -28,10 +47,12 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
+        textTheme: GoogleFonts.ralewayTextTheme(),
+        scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const SplashView(),
     );
   }
 }

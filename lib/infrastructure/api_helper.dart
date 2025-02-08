@@ -28,6 +28,7 @@ class ApiBaseHelper {
           final response = await http.get(
               Uri.parse(BackendConfigs.kBaseURL + endPoint),
               headers: isRequiredHeader ? header! : null);
+
           responseJson = _returnResponseEither(response);
           logger.i(
               "BaseUrl -> ${BackendConfigs.kBaseURL} || EndPoints -> $endPoint || Status Code -> ${response.statusCode.toString()} || Response Time: ${DateTime.now().difference(executionTime).inMilliseconds} ms");
@@ -56,7 +57,7 @@ class ApiBaseHelper {
       return Left(GlobalErrorModel(
           message: "Sorry! We are unable to connect our servers.!"));
     } catch (e) {
-      return Left(GlobalErrorModel(message: "Something went wrong."));
+      return Left(GlobalErrorModel(message: e.toString()));
     }
   }
 
